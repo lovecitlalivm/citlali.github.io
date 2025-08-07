@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>我的技术博客 | GitHub Pages</title>
+    <!-- 引入Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- 引入Font Awesome -->
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <!-- 引入Google字体 -->
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind配置 -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#24292e',
+                        secondary: '#0366d6',
+                        accent: '#58a6ff',
+                        light: '#f8f9fa',
+                        dark: '#1a1f24'
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['Fira Code', 'monospace'],
+                    },
+                }
+            }
+        }
+    </script>
+    
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .content-auto {
+                content-visibility: auto;
+            }
+            .text-balance {
+                text-wrap: balance;
+            }
+            .blog-card-hover {
+                @apply transition-all duration-300 hover:shadow-lg hover:-translate-y-1;
+            }
+        }
+    </style>
+    
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        /* 代码块样式 */
+        .code-block {
+            background-color: #f6f8fa;
+            border-radius: 6px;
+            padding: 1rem;
+            overflow-x: auto;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.875rem;
+            line-height: 1.5;
+        }
+        
+        /* 导航栏滚动效果 */
+        .navbar-scrolled {
+            @apply bg-white/95 backdrop-blur-sm shadow-md;
+        }
+        
+        /* 动画效果 */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .animate-fade-in {
+            animation: fadeIn 0.5s ease forwards;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 font-sans text-dark">
+    <!-- 导航栏 -->
+    <nav id="navbar" class="fixed w-full z-50 transition-all duration-300 py-4">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center">
+                <a href="#" class="flex items-center space-x-2">
+                    <i class="fa fa-github text-2xl text-primary"></i>
+                    <span class="text-xl font-bold">我的博客</span>
+                </a>
+                
+                <!-- 桌面导航 -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#home" class="hover:text-secondary transition-colors">首页</a>
+                    <a href="#posts" class="hover:text-secondary transition-colors">博客文章</a>
+                    <a href="#guide" class="hover:text-secondary transition-colors">GitHub Pages指南</a>
+                    <a href="#about" class="hover:text-secondary transition-colors">关于我</a>
+                    <a href="#new-post" class="bg-secondary text-white px-4 py-2 rounded-md hover:bg-secondary/90 transition-colors">
+                        <i class="fa fa-plus mr-1"></i> 新建文章
+                    </a>
+                </div>
+                
+                <!-- 移动端菜单按钮 -->
+                <button id="menu-toggle" class="md:hidden text-xl">
+                    <i class="fa fa-bars"></i>
+                </button>
+            </div>
+            
+            <!-- 移动端菜单 -->
+            <div id="mobile-menu" class="hidden md:hidden mt-4 pb-2">
+                <div class="flex flex-col space-y-3">
+                    <a href="#home" class="py-2 hover:text-secondary transition-colors">首页</a>
+                    <a href="#posts" class="py-2 hover:text-secondary transition-colors">博客文章</a>
+                    <a href="#guide" class="py-2 hover:text-secondary transition-colors">GitHub Pages指南</a>
+                    <a href="#about" class="py-2 hover:text-secondary transition-colors">关于我</a>
+                    <a href="#new-post" class="bg-secondary text-white px-4 py-2 rounded-md text-center hover:bg-secondary/90 transition-colors">
+                        <i class="fa fa-plus mr-1"></i> 新建文章
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 首页头部 -->
+    <header id="home" class="pt-32 pb-20 bg-gradient-to-br from-primary to-dark text-white">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="max-w-3xl mx-auto text-center">
+                <h1 class="text-4xl md:text-5xl font-bold mb-6 animate-fade-in">技术分享与思考</h1>
+                <p class="text-xl text-gray-200 mb-8 animate-fade-in" style="animation-delay: 0.1s">
+                    记录开发历程，分享学习心得，探索技术世界
+                </p>
+                <div class="flex flex-wrap justify-center gap-4 animate-fade-in" style="animation-delay: 0.2s">
+                    <a href="#posts" class="bg-white text-primary px-6 py-3 rounded-md font-medium hover:bg-gray-100 transition-colors">
+                        浏览文章
+                    </a>
+                    <a href="#guide" class="bg-transparent border-2 border-white px-6 py-3 rounded-md font-medium hover:bg-white/10 transition-colors">
+                        了解GitHub Pages
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- 最新文章 -->
+    <section id="posts" class="py-16 bg-white">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold mb-4">最新文章</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">分享我的技术探索和学习笔记</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- 文章卡片1 -->
+                <article class="bg-gray-50 rounded-lg overflow-hidden shadow-sm blog-card-hover">
+                    <div class="p-6">
+                        <div class="flex items-center text-sm text-gray-500 mb-3">
+                            <span class="flex items-center"><i class="fa fa-calendar-o mr-1"></i> 2023-09-15</span>
+                            <span class="mx-2">•</span>
+                            <span class="flex items-center"><i class="fa fa-tag mr-1"></i> JavaScript</span>
+                        </div>
+                        <h3 class="text-xl font-bold mb-3">
+                            <a href="#" class="hover:text-secondary transition-colors">JavaScript异步编程全解析</a>
+                        </h3>
+                        <p class="text-gray-600 mb-4 line-clamp-3">
+                            本文详细解析了JavaScript中的异步编程模式，从回调函数到Promise，再到async/await，帮助你彻底理解异步编程的精髓。
+                        </p>
+                        <a href="#" class="inline-flex items-center text-secondary font-medium hover:underline">
+                            阅读更多 <i class="fa fa-arrow-right ml-1"></i>
+                        </a>
+                    </div>
+                </article>
+                
+                <!-- 文章卡片2 -->
+                <article class="bg-gray-50 rounded-lg overflow-hidden shadow-sm blog-card-hover">
+                    <div class="p-6">
+                        <div class="flex items-center text-sm text-gray-500 mb-3">
+                            <span class="flex items-center"><i class="fa fa-calendar-o mr-1"></i> 2023-08-28</span>
+                            <span class="mx-2">•</span>
+                            <span class="flex items-center"><i class="fa fa-tag mr-1"></i> GitHub</span>
+                        </div>
+                        <h3 class="text-xl font-bold mb-3">
+                            <a href="#" class="hover:text-secondary transition-colors">GitHub Actions自动化部署指南</a>
+                        </h3>
+                        <p class="text-gray-600 mb-4 line-clamp-3">
+                            如何利用GitHub Actions实现博客的自动部署和更新？本文带你一步步配置工作流，实现提交代码后自动部署到GitHub Pages。
+                        </p>
+                        <a href="#" class="inline-flex items-center text-secondary font-medium hover:underline">
+                            阅读更多 <i class="fa fa-arrow-right ml-1"></i>
+                        </a>
+                    </div>
+                </article>
+                
+                <!-- 文章卡片3 -->
+                <article class="bg-gray-50 rounded-lg overflow-hidden shadow-sm blog-card-hover">
+                    <div class="p-6">
+                        <div class="flex items-center text-sm text-gray-500 mb-3">
+                            <span class="flex items-center"><i class="fa fa-calendar-o mr-1"></i> 2023-08-10</span>
+                            <span class="mx-2">•</span>
+                            <span class="flex items-center"><i class="fa fa-tag mr-1"></i> CSS</span>
+                        </div>
+                        <h3 class="text-xl font-bold mb-3">
+                            <a href="#" class="hover:text-secondary transition-colors">Tailwind CSS实用技巧合集</a>
+                        </h3>
+                        <p class="text-gray-600 mb-4 line-clamp-3">
+                            收集了多个Tailwind CSS的实用技巧和最佳实践，帮助你更高效地使用这个强大的CSS框架，提升开发效率。
+                        </p>
+                        <a href="#" class="inline-flex items-center text-secondary font-medium hover:underline">
+                            阅读更多 <i class="fa fa-arrow-right ml-1"></i>
+                        </a>
+                    </div>
+                </article>
+            </div>
+            
+            <div class="text-center mt-12">
+                <a href="#" class="inline-flex items-center px-5 py-2 border border-gray-300 rounded-md text-gray-700 bg-white hover:bg-gray-50 transition-colors">
+                    查看所有文章 <i class="fa fa-chevron-right ml-2 text-sm"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- GitHub Pages指南 -->
+    <section id="guide" class="py-16 bg-gray-50">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="max-w-4xl mx-auto">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl font-bold mb-4">在GitHub Pages上发布博客</h2>
+                    <p class="text-gray-600">简单几步，免费托管你的个人博客</p>
+                </div>
+                
+                <div class="bg-white rounded-xl shadow-sm p-8">
+                    <h3 class="text-2xl font-bold mb-6">新建博客文章步骤</h3>
+                    
+                    <div class="space-y-8">
+                        <div>
+                            <h4 class="text-xl font-semibold mb-3 flex items-center">
+                                <span class="bg-secondary text-white w-8 h-8 rounded-full flex items-center justify-center mr-3 flex-shrink-0">1</span>
+                                准备文章内容
+                            </h4>
+                            <p class="text-gray-700 mb-4 ml-11">
+                                使用Markdown格式编写你的博客文章，这是GitHub Pages最常用的格式。确保文章包含标题、内容和适当的格式。
+                            </p>
+                            <div class="ml-11 code-block text-sm">
+                                # 文章标题<br>
+                                <br>
+                                这是文章内容，支持**加粗**、*斜体*等Markdown格式。<br>
+                                <br>
+                                ## 二级标题<br>
+                                - 列表项1<br>
+                                - 列表项2
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <h4 class="text-xl font-semibold mb-3 flex items-center">
+                                <span class="bg-secondary text-white w-8 h-8 rounded-full flex items-center justify-center mr-3 flex-shrink-0">2</span>
+                                命名文章文件
+                            </h4>
+                            <p class="text-gray-700 mb-4 ml-11">
+                                将Markdown文件命名为`YYYY-MM-DD-文章标题.md`格式，例如`2023-09-15-javascript-async.md`，并保存在`_posts`目录下。
+                            </p>
+                        </div>
+                        
+                        <div>
+                            <h4 class="text-xl font-semibold mb-3 flex items-center">
+                                <span class="bg-secondary text-white w-8 h-8 rounded-full flex items-center justify-center mr-3 flex-shrink-0">3</span>
+                                添加文章头部信息
+                            </h4>
+                            <p class="text-gray-700 mb-4 ml-11">
+                                在文章开头添加YAML头部信息，指定标题、日期、分类等元数据：
+                            </p>
+                            <div class="ml-11 code-block text-sm">
+                                ---<br>
+                                layout: post<br>
+                                title: "JavaScript异步编程全解析"<br>
+                                date: 2023-09-15 10:30:00<br>
+                                categories: JavaScript<br>
+                                tags: async promise<br>
+                                ---
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <h4 class="text-xl font-semibold mb-3 flex items-center">
+                                <span class="bg-secondary text-white w-8 h-8 rounded-full flex items-center justify-center mr-3 flex-shrink-0">4</span>
+                                提交到GitHub仓库
+                            </h4>
+                            <p class="text-gray-700 mb-4 ml-11">
+                                将新文章提交到你的GitHub Pages仓库：
+                            </p>
+                            <div class="ml-11 code-block text-sm">
+                                git add _posts/2023-09-15-javascript-async.md<br>
+                                git commit -m "添加JavaScript异步编程文章"<br>
+                                git push origin main
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <h4 class="text-xl font-semibold mb-3 flex items-center">
+                                <span class="bg-secondary text-white w-8 h-8 rounded-full flex items-center justify-center mr-3 flex-shrink-0">5</span>
+                                查看发布结果
+                            </h4>
+                            <p class="text-gray-700 ml-11">
+                                提交后，GitHub Pages会自动构建并部署你的博客。几分钟后，访问`https://你的用户名.github.io`即可看到新发布的文章。
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-8 pt-6 border-t border-gray-200">
+                        <h4 class="text-xl font-semibold mb-4">推荐工具</h4>
+                        <ul class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <li class="flex items-start">
+                                <i class="fa fa-check-circle text-green-500 mt-1 mr-2"></i>
+                                <span><strong>Jekyll</strong> - GitHub Pages默认支持的静态站点生成器</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fa fa-check-circle text-green-500 mt-1 mr-2"></i>
+                                <span><strong>VS Code</strong> - 带有Markdown预览功能的代码编辑器</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fa fa-check-circle text-green-500 mt-1 mr-2"></i>
+                                <span><strong>Prose</strong> - 用于编辑GitHub上Markdown文件的在线编辑器</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fa fa-check-circle text-green-500 mt-1 mr-2"></i>
+                                <span><strong>GitHub Desktop</strong> - 简化Git操作的桌面客户端</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 新建文章表单 -->
+    <section id="new-post" class="py-16 bg-white">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="max-w-3xl mx-auto">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl font-bold mb-4">新建博客文章</h2>
+                    <p class="text-gray-600">填写以下信息，生成符合GitHub Pages要求的文章文件</p>
+                </div>
+                
+                <div class="bg-gray-50 rounded-xl shadow-sm p-6 md:p-8">
+                    <form id="post-form" class="space-y-6">
+                        <div>
+                            <label for="post-title" class="block text-gray-700 font-medium mb-2">文章标题</label>
+                            <input type="text" id="post-title" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-secondary focus:border-secondary transition-colors" placeholder="输入文章标题">
+                        </div>
+                        
+                        <div>
+                            <label for="post-date" class="block text-gray-700 font-medium mb-2">发布日期</label>
+                            <input type="date" id="post-date" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-secondary focus:border-secondary transition-colors">
+                        </div>
+                        
+                        <div>
+                            <label for="post-category" class="block text-gray-700 font-medium mb-2">分类</label>
+                            <input type="text" id="post-category" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-secondary focus:border-secondary transition-colors" placeholder="例如：JavaScript, Python">
+                        </div>
+                        
+                        <div>
+                            <label for="post-tags" class="block text-gray-700 font-medium mb-2">标签（用逗号分隔）</label>
+                            <input type="text" id="post-tags" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-secondary focus:border-secondary transition-colors" placeholder="例如：async, promise, 前端">
+                        </div>
+                        
+                        <div>
+                            <label for="post-content" class="block text-gray-700 font-medium mb-2">文章内容（Markdown格式）</label>
+                            <textarea id="post-content" rows="10" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-secondary focus:border-secondary transition-colors font-mono text-sm" placeholder="# 标题&#10;&#10;文章内容..."></textarea>
+                        </div>
+                        
+                        <div class="pt-4">
+                            <button type="submit" class="w-full bg-secondary text-white py-3 rounded-md hover:bg-secondary/90 transition-colors font-medium">
+                                生成文章文件
+                            </button>
+                        </div>
+                    </form>
+                    
+                    <!-- 生成的文件内容 -->
+                    <div id="generated-file" class="mt-8 hidden">
+                        <div class="border-t border-gray-200 pt-6">
+                            <h3 class="text-xl font-semibold mb-4">生成的文件内容</h3>
+                            <div class="mb-4">
+                                <p class="text-gray-600 mb-2">文件名：<span id="filename" class="font-mono bg-gray-100 px-2 py-1 rounded"></span></p>
+                            </div>
+                            <div class="bg-gray-100 rounded-md p-4 overflow-x-auto font-mono text-sm max-h-64">
+                                <pre id="file-content"></pre>
+                            </div>
+                            <div class="mt-4 flex justify-end">
+                                <button id="copy-button" class="flex items-center px-4 py-2 bg-gray-200 hover:bg-gray-300 rounded-md transition-colors">
+                                    <i class="fa fa-copy mr-2"></i> 复制内容
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 关于我 -->
+    <section id="about" class="py-16 bg-gray-50">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="max-w-4xl mx-auto">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl font-bold mb-4">关于我</h2>
+                    <p class="text-gray-600">热爱技术，乐于分享</p>
+                </div>
+                
+                <div class="bg-white rounded-xl shadow-sm overflow-hidden">
+                    <div class="md:flex">
+                        <div class="md:w-1/3 bg-gray-100 flex items-center justify-center p-8">
+                            <div class="w-48 h-48 rounded-full overflow-hidden border-4 border-white shadow-md">
+                                <img src="https://picsum.photos/id/1005/400/400" alt="个人头像" class="w-full h-full object-cover">
+                            </div>
+                        </div>
+                        <div class="md:w-2/3 p-8">
+                            <h3 class="text-2xl font-bold mb-4">开发者简介</h3>
+                            <p class="text-gray-700 mb-4">
+                                你好！我是一名全栈开发者，热衷于探索新技术和分享学习经验。我专注于Web开发，熟悉前端和后端技术栈，喜欢通过博客记录自己的学习历程。
+                            </p>
+                            <p class="text-gray-700 mb-6">
+                                这个博客基于GitHub Pages搭建，使用Jekyll作为静态站点生成器。所有文章都以Markdown格式编写，通过Git进行版本控制和发布。
+                            </p>
+                            
+                            <div class="mb-6">
+                                <h4 class="text-lg font-semibold mb-3">社交平台</h4>
+                                <div class="flex flex-wrap gap-4">
+                                    <a href="#" class="flex items-center px-4 py-2 bg-gray-100 hover:bg-gray-200 rounded-md transition-colors" title="GitHub">
+                                        <i class="fa fa-github mr-2 text-primary"></i> GitHub
+                                    </a>
+                                    <a href="#" class="flex items-center px-4 py-2 bg-gray-100 hover:bg-gray-200 rounded-md transition-colors" title="微信">
+                                        <i class="fa fa-weixin mr-2 text-green-500"></i> 微信
+                                    </a>
+                                    <a href="#" class="flex items-center px-4 py-2 bg-gray-100 hover:bg-gray-200 rounded-md transition-colors" title="QQ">
+                                        <i class="fa fa-qq mr-2 text-blue-400"></i> QQ
+                                    </a>
+                                    <a href="#" class="flex items-center px-4 py-2 bg-gray-100 hover:bg-gray-200 rounded-md transition-colors" title="邮箱">
+                                        <i class="fa fa-envelope mr-2 text-red-500"></i> 邮箱
+                                    </a>
+                                    <a href="#" class="flex items-center px-4 py-2 bg-gray-100 hover:bg-gray-200 rounded-md transition-colors" title="知乎">
+                                        <i class="fa fa-book mr-2 text-blue-600"></i> 知乎
+                                    </a>
+                                </div>
+                            </div>
+                            
+                            <a href="#contact" class="inline-flex items-center px-5 py-2 bg-secondary text-white rounded-md hover:bg-secondary/90 transition-colors">
+                                联系我 <i class="fa fa-arrow-right ml-2"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 联系表单 -->
+    <section id="contact" class="py-16 bg-white">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="max-w-2xl mx-auto">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl font-bold mb-4">联系我</h2>
+                    <p class="text-gray-600">有任何问题或建议，欢迎随时联系</p>
+                </div>
+                
+                <form class="bg-gray-50 rounded-xl shadow-sm p-6 md:p-8 space-y-6">
+                    <div>
+                        <label for="contact-name" class="block text-gray-700 font-medium mb-2">姓名</label>
+                        <input type="text" id="contact-name" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-secondary focus:border-secondary transition-colors" placeholder="你的姓名">
+                    </div>
+                    
+                    <div>
+                        <label for="contact-email" class="block text-gray-700 font-medium mb-2">邮箱</label>
+                        <input type="email" id="contact-email" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-secondary focus:border-secondary transition-colors" placeholder="你的邮箱地址">
+                    </div>
+                    
+                    <div>
+                        <label for="contact-message" class="block text-gray-700 font-medium mb-2">留言</label>
+                        <textarea id="contact-message" rows="5" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-secondary focus:border-secondary transition-colors" placeholder="请输入你的留言内容..."></textarea>
+                    </div>
+                    
+                    <div>
+                        <button type="submit" class="w-full bg-secondary text-white py-3 rounded-md hover:bg-secondary/90 transition-colors font-medium">
+                            发送留言
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer class="bg-primary text-white py-12">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div>
+                    <h3 class="text-xl font-bold mb-4 flex items-center">
+                        <i class="fa fa-github mr-2"></i> 技术博客
+                    </h3>
+                    <p class="text-gray-300 mb-4">
+                        记录开发历程，分享学习心得，探索技术世界
+                    </p>
+                    <p class="text-gray-400 text-sm">
+                        基于GitHub Pages构建
+                    </p>
+                </div>
+                
+                <div>
+                    <h3 class="text-xl font-bold mb-4">快速链接</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#home" class="text-gray-300 hover:text-white transition-colors">首页</a></li>
+                        <li><a href="#posts" class="text-gray-300 hover:text-white transition-colors">博客文章</a></li>
+                        <li><a href="#guide" class="text-gray-300 hover:text-white transition-colors">GitHub Pages指南</a></li>
+                        <li><a href="#about" class="text-gray-300 hover:text-white transition-colors">关于我</a></li>
+                        <li><a href="#new-post" class="text-gray-300 hover:text-white transition-colors">新建文章</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-xl font-bold mb-4">订阅更新</h3>
+                    <p class="text-gray-300 mb-4">
+                        输入你的邮箱，获取最新博客更新
+                    </p>
+                    <form class="flex">
+                        <input type="email" placeholder="你的邮箱" class="px-4 py-2 rounded-l-md w-full focus:outline-none text-dark">
+                        <button type="submit" class="bg-accent hover:bg-accent/90 px-4 py-2 rounded-r-md transition-colors">
+                            <i class="fa fa-paper-plane"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-700 mt-10 pt-6 text-center text-gray-400 text-sm">
+                <p>&copy; 2023 技术博客. 保留所有权利.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        // 导航栏滚动效果
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('navbar-scrolled');
+            } else {
+                navbar.classList.remove('navbar-scrolled');
+            }
+        });
+        
+        // 移动端菜单切换
+        const menuToggle = document.getElementById('menu-toggle');
+        const mobileMenu = document.getElementById('mobile-menu');
+        
+        menuToggle.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+        
+        // 平滑滚动
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                // 关闭移动菜单
+                if (!mobileMenu.classList.contains('hidden')) {
+                    mobileMenu.classList.add('hidden');
+                }
+                
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // 文章表单处理
+        const postForm = document.getElementById('post-form');
+        const generatedFile = document.getElementById('generated-file');
+        const filenameElement = document.getElementById('filename');
+        const fileContentElement = document.getElementById('file-content');
+        const copyButton = document.getElementById('copy-button');
+        
+        // 设置默认日期为今天
+        document.getElementById('post-date').valueAsDate = new Date();
+        
+        postForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            // 获取表单数据
+            const title = document.getElementById('post-title').value.trim();
+            const date = document.getElementById('post-date').value;
+            const category = document.getElementById('post-category').value.trim();
+            const tags = document.getElementById('post-tags').value.trim();
+            const content = document.getElementById('post-content').value.trim();
+            
+            // 验证必填字段
+            if (!title || !date || !content) {
+                alert('请填写标题、日期和内容');
+                return;
+            }
+            
+            // 生成文件名
+            const slug = title.toLowerCase()
+                .replace(/[^a-z0-9]+/g, '-')
+                .replace(/(^-|-$)+/g, '');
+            const filename = `${date}-${slug}.md`;
+            
+            // 生成文件内容
+            let fileContent = '---\n';
+            fileContent += `layout: post\n`;
+            fileContent += `title: "${title}"\n`;
+            fileContent += `date: ${date} 00:00:00\n`;
+            
+            if (category) {
+                fileContent += `categories: ${category}\n`;
+            }
+            
+            if (tags) {
+                fileContent += `tags: ${tags.replace(/,/g, ' ')}\n`;
+            }
+            
+            fileContent += '---\n\n';
+            fileContent += content;
+            
+            // 显示生成的文件
+            filenameElement.textContent = filename;
+            fileContentElement.textContent = fileContent;
+            generatedFile.classList.remove('hidden');
+            
+            // 滚动到生成的文件
+            generatedFile.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        });
+        
+        // 复制内容功能
+        copyButton.addEventListener('click', () => {
+            const textToCopy = fileContentElement.textContent;
+            navigator.clipboard.writeText(textToCopy).then(() => {
+                const originalText = copyButton.innerHTML;
+                copyButton.innerHTML = '<i class="fa fa-check mr-2"></i> 已复制';
+                copyButton.classList.add('bg-green-100', 'text-green-800');
+                copyButton.classList.remove('bg-gray-200', 'hover:bg-gray-300');
+                
+                setTimeout(() => {
+                    copyButton.innerHTML = originalText;
+                    copyButton.classList.remove('bg-green-100', 'text-green-800');
+                    copyButton.classList.add('bg-gray-200', 'hover:bg-gray-300');
+                }, 2000);
+            });
+        });
+        
+        // 联系表单提交
+        document.querySelector('#contact form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            alert('留言发送成功！感谢你的反馈。');
+            e.target.reset();
+        });
+    </script>
+</body>
+</html>
+    
